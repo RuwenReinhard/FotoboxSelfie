@@ -168,7 +168,7 @@ class Assistant(Tk):
             self.credentials_frame = LabelFrame(self.main_frame, text="Credentials", font='Helvetica')
             self.__check_credentials_files()
 
-            //self.refresh_cred_button = Button(self.main_frame, text="Refresh", font='Helvetica', fg=self.BUTTONS_BG, command=self.__check_credentials_files)
+            # self.refresh_cred_button = Button(self.main_frame, text="Refresh", font='Helvetica', fg=self.BUTTONS_BG, command=self.__check_credentials_files)
             self.refresh_cred_button = Button(self.main_frame, text="Refresh", font='Helvetica', fg=self.BUTTONS_BG, command=True)
 
 
