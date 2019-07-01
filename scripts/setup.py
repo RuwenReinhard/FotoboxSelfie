@@ -165,7 +165,7 @@ class Assistant(Tk):
             invalid_icon = _Image.open(INVALID_ICON_FILE)
             self.invalid_icon = _ImageTk.PhotoImage(invalid_icon)
 
-            self.credentials_frame = LabelFrame(self.main_frame, text="Credentials", font='Helvetica')
+            self.credentials_frame = LabelFrame(self.main_frame, text="Credentials:", font='Helvetica')
             self.__check_credentials_files()
 
             # self.refresh_cred_button = Button(self.main_frame, text="Refresh", font='Helvetica', fg=self.BUTTONS_BG, command=self.__check_credentials_files)
