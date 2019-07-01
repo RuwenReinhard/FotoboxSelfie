@@ -31,6 +31,7 @@ import oauth2services
 
 #URL of the Google console developer assistant to create App_id file
 GET_APP_ID_WIZARD_URL="https://console.developers.google.com/start/api?id=gmail"
+PARTYRAZZI_UPLOAD_URL="https://liveshow.partyrazzi.photos/api/upload.php"
 
 class Assistant(Tk):
     """A page-by-page assistant based on Tk"""
@@ -656,7 +657,8 @@ Click the Start button below:
         self.cred_store_label.pack(side=LEFT,padx=20)
         self.cred_store_button.pack(side=RIGHT,padx=20)
         if not has_app_id:
-            self.cred_store_button.config(state=DISABLED,bg=self.BUTTONS_BG_INACTIVE)
+            # self.cred_store_button.config(state=DISABLED,bg=self.BUTTONS_BG_INACTIVE)
+            self.cred_store_button.config(state=NORMAL,bg=self.BUTTONS_BG)
         else:
             self.cred_store_button.config(state=NORMAL,bg=self.BUTTONS_BG)
 
