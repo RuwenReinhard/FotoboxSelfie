@@ -846,8 +846,9 @@ class UserInterface():
         #    return
         #upload to picasa album
         url = 'https://liveshow.partyrazzi.photos/api/upload.php'
+        values = {'short_id': 'test'}
         files = {'file': open(filen, 'rb')}
-        r = requests.post(url, files=files)    
+        r = requests.post(url, files=files, data=values)    
 
 
 
