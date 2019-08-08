@@ -571,7 +571,7 @@ class UserInterface():
                     self.status("Uploading image")
                     self.log.debug("Uploading image")
                     try:
-                        self.googleUpload(
+                        self.partyrazziUpload(
                             self.last_picture_filename,
                             title= self.last_picture_title,
                             caption = config.photoCaption + " " + self.last_picture_title)
@@ -831,6 +831,23 @@ class UserInterface():
             config.albumID = None
 
         self.oauth2service.upload_picture(filen, config.albumID, title, caption)
+
+
+    def partyrazziUpload(self,filen, title='Photobooth', caption = None):
+        """Upload a picture to Google Photos
+
+        Arguments:
+            filen (str) : path to the picture to upload
+            title       : title of the picture
+            caption     : optional caption for the picture
+        """
+        #if not self.upload_images:
+        #    return
+        #upload to picasa album
+        url = 'https://liveshow.partyrazzi.photos/api/upload.php'
+        files = {'file': open(filen, 'rb')}
+        r = requests.post(url, files=files)    
+
 
 
     def send_email(self):
