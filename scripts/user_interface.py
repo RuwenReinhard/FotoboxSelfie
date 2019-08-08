@@ -21,6 +21,7 @@ from tkImageLabel import ImageLabel
 from constants import *
 import time
 import traceback
+import requests
 
 
 try:
