@@ -567,20 +567,20 @@ class UserInterface():
                 self.log.debug("snap: displaying image")
                 self.image.load(snap_filename)
                 # 2. Upload
-                if self.signed_in:
-                    self.status("Uploading image")
-                    self.log.debug("Uploading image")
-                    try:
-                        self.partyrazziUpload(
-                            self.last_picture_filename,
-                            title= self.last_picture_title,
-                            caption = config.photoCaption + " " + self.last_picture_title)
-                        picture_uploaded = True
-                        self.log.info("Image %s successfully uploaded"%self.last_picture_title)
-                        self.status("")
-                    except Exception as e:
-                        self.status("Error uploading image :(")
-                        self.log.exception("snap: Error uploading image")
+                #if self.signed_in:
+                self.status("Uploading image")
+                self.log.debug("Uploading image")
+                try:
+                    self.partyrazziUpload(
+                        self.last_picture_filename,
+                        title= self.last_picture_title,
+                        caption = config.photoCaption + " " + self.last_picture_title)
+                    picture_uploaded = True
+                    self.log.info("Image %s successfully uploaded"%self.last_picture_title)
+                    self.status("")
+                except Exception as e:
+                    self.status("Error uploading image :(")
+                    self.log.exception("snap: Error uploading image")
                 
                 # 3. Archive
                 if config.ARCHIVE:
