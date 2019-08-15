@@ -25,7 +25,7 @@ class Configuration():
     selected_printer = None #No printer select
     enable_hardware_buttons = False #Enable hardware buttons
     enable_email_logging = False # Should we log outgoing emails?
-    eventcode = "" #The Eventcode to upload
+    eventcode = None #The Eventcode to upload
 
     #init
     def __init__(self,configuration_file_name):
@@ -77,6 +77,7 @@ class Configuration():
         if "selected_printer" in config.keys(): self.selected_printer = config["selected_printer"]
         if "enable_hardware_buttons" in config.keys():  self.enable_hardware_buttons = config["enable_hardware_buttons"]
         if "enable_email_logging" in config.keys(): self.enable_email_logging = config["enable_email_logging"]
+        if "eventcode" in config.keys(): self.eventcode = config["eventcode"]
 
 
         return self.is_valid
