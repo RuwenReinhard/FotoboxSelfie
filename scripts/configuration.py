@@ -18,7 +18,7 @@ class Configuration():
     emailSubject = "Here's your photo!" # subject line of the email sent from the photobooth
     emailMsg     = "Greetings, here's your photo sent from the photobooth" # Brief body of the message sent from the photobooth
     full_screen  = True #Start application in full screen
-    enable_email  = True #Enable the 'send email" feature
+    enable_email  = False #Enable the 'send email" feature
     enable_upload = True #Enable the upload feature
     enable_print = False #Enable the printer feature
     enable_effects = True

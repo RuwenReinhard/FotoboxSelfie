@@ -54,8 +54,8 @@ EFFECTS_PARAMETERS = {
     },
     "Animation": {
         'snap_size' : (500, 500),   #(width, height) => Caution, gif animation can be huge, keep this small
-        'frame_number' : 10,        # number of frames in the animation
-        'snap_period_millis' : 200, # time interval between two snapshots
+        'frame_number' : 20,        # number of frames in the animation
+        'snap_period_millis' : 100, # time interval between two snapshots
         'gif_period_millis' : 50    # time interval in the animated gif
     }
 }
