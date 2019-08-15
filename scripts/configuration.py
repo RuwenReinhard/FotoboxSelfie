@@ -25,6 +25,7 @@ class Configuration():
     selected_printer = None #No printer select
     enable_hardware_buttons = False #Enable hardware buttons
     enable_email_logging = False # Should we log outgoing emails?
+    eventcode = "" #The Eventcode to upload
 
     #init
     def __init__(self,configuration_file_name):
