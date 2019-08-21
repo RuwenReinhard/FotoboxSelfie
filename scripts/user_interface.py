@@ -901,7 +901,6 @@ class UserInterface():
 
     def change_printer_available(self):
         stop = 0
-        TIMEOUT = 60
         PRINTTIME = 70
         while stop < PRINTTIME:
             stop+= 1
@@ -928,7 +927,7 @@ class UserInterface():
                 #    stop+= 1
                 #    time.sleep(1)
                 #    self.log.info(conn.getJobAttributes(printid)["job-state"])
-                output = subprocess.Popen(self.change_printer_available, self) #I would like to pass the function object and its arguments               
+                output = subprocess.Popen(self.change_printer_available) #I would like to pass the function object and its arguments               
             except:
                 self.log.exception('print failed')
                 self.status("Print failed :(")
