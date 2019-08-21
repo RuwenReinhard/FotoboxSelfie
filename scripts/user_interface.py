@@ -22,6 +22,7 @@ from constants import *
 import time
 import traceback
 import requests
+import time
 
 
 try:
@@ -76,6 +77,7 @@ class LongPressDetector:
         self.long_press_duration = long_press_duration
         root.bind("<Button-1>",self.__click)
         root.bind("<ButtonRelease-1>",self.__release)
+        self.prints_checker = False
 
 
     def suspend(self):
@@ -899,17 +901,23 @@ class UserInterface():
 
     def send_print(self):
         self.log.debug("send_print: Printing image")
-        try:
-            conn = cups.Connection()
-            printers = conn.getPrinters()
-            default_printer = printers.keys()[self.selected_printer]#defaults to the first printer installed
-            cups.setUser(getpass.getuser())
-            conn.printFile(default_printer, self.last_picture_filename, self.last_picture_title, {'fit-to-page':'True'})
-            self.log.info('send_print: Sending to printer...')
-        except:
-            self.log.exception('print failed')
-            self.status("Print failed :(")
-        self.log.info("send_print: Image printed")
+        if self.prints_checker == False:
+            try:
+                conn = cups.Connection()
+                printers = conn.getPrinters()
+                default_printer = printers.keys()[self.selected_printer]#defaults to the first printer installed
+                cups.setUser(getpass.getuser())
+                conn.printFile(default_printer, self.last_picture_filename, self.last_picture_title, {'fit-to-page':'True'})
+                self.log.info('send_print: Sending to printer...')
+                self.prints_checker = True
+                time.sleep(5)
+                self.prints_checker = False
+            except:
+                self.log.exception('print failed')
+                self.status("Print failed :(")
+            self.log.info("send_print: Image printed")
+        else:
+            self.status("Printer is in use")    
 
 
     def kill_tkkb(self):
