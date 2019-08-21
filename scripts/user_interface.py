@@ -921,7 +921,7 @@ class UserInterface():
                 self.log.info('send_print: Sending to printer...')
                 self.printer_available = False
                 
-                x = threading.Thread(target=change_printer_available, args=(self,))
+                x = threading.Thread(target=self.change_printer_available, args=(self,))
                 x.start()
                
                 #while conn.getJobs().get(printid, None) is not None:
