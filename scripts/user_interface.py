@@ -23,6 +23,7 @@ import time
 import traceback
 import requests
 import time
+import subprocess
 
 
 try:
@@ -898,6 +899,15 @@ class UserInterface():
                 self.tkkb.transient(self.root)
                 self.tkkb.protocol("WM_DELETE_WINDOW", self.kill_tkkb)
 
+    def change_printer_available(self):
+        stop = 0
+        TIMEOUT = 60
+        PRINTTIME = 70
+        while stop < PRINTTIME:
+            stop+= 1
+            time.sleep(1)
+            self.log.info(stop)    
+        self.printer_available = True
 
     def send_print(self):
         self.log.debug("send_print: Printing image")
@@ -910,10 +920,7 @@ class UserInterface():
                 printid = conn.printFile(default_printer, self.last_picture_filename, self.last_picture_title, {'fit-to-page':'True'})
                 self.log.info('send_print: Sending to printer...')
                 self.printer_available = False
-                stop = 0
-                TIMEOUT = 60
-                PRINTTIME = 70
-
+               
                 #while conn.getJobs().get(printid, None) is not None:
                 #    self.log.info(conn.getJobs().get(printid, None))
                 #    time.sleep(1)
@@ -921,15 +928,7 @@ class UserInterface():
                 #    stop+= 1
                 #    time.sleep(1)
                 #    self.log.info(conn.getJobAttributes(printid)["job-state"])
-                while stop < PRINTTIME:
-                    stop+= 1
-                    time.sleep(1)
-                    self.log.info(stop)
-                if stop < TIMEOUT:
-                    self.printer_available = True
-                    self.log.info('PRINT_SUCCESS')
-                else:
-                    self.log.info('PRINT_FAILURE')
+                output = subprocess.Popen(send_print, self) #I would like to pass the function object and its arguments               
             except:
                 self.log.exception('print failed')
                 self.status("Print failed :(")
