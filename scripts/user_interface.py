@@ -24,7 +24,7 @@ import traceback
 import requests
 import time
 import subprocess
-from multiprocessing.pool import ThreadPool
+from thread import start_new_thread
 
 
 try:
@@ -907,7 +907,7 @@ class UserInterface():
             stop+= 1
             time.sleep(1)
             self.log.info(stop)    
-        return not boolean
+        self.printer_available = True
 
     def send_print(self):
         self.log.debug("send_print: Printing image")
@@ -920,10 +920,9 @@ class UserInterface():
                 #printid = conn.printFile(default_printer, self.last_picture_filename, self.last_picture_title, {'fit-to-page':'True'})
                 self.log.info('send_print: Sending to printer...')
                 self.printer_available = False
-                pool = ThreadPool(processes=1)
-                result = pool.apply_async(self.change_printer_available,[self.printer_available])
-
-                self.printer_available = result.get()
+                
+                start_new_thread(change_printer_available, ())
+               
                 #while conn.getJobs().get(printid, None) is not None:
                 #    self.log.info(conn.getJobs().get(printid, None))
                 #    time.sleep(1)
