@@ -239,6 +239,7 @@ class UserInterface():
         self.auth_after_id = None
         self.poll_period = poll_period
         self.poll_after_id = None
+        self.printer_available = True
 
         self.last_picture_filename = None
         self.last_picture_time = time.time()
@@ -900,31 +901,42 @@ class UserInterface():
 
     def send_print(self):
         self.log.debug("send_print: Printing image")
-        try:
-            conn = cups.Connection()
-            printers = conn.getPrinters()
-            default_printer = printers.keys()[self.selected_printer]#defaults to the first printer installed
-            cups.setUser(getpass.getuser())
-            printid = conn.printFile(default_printer, self.last_picture_filename, self.last_picture_title, {'fit-to-page':'True'})
-            self.log.info('send_print: Sending to printer...')
-            stop = 0
-            TIMEOUT = 60
-            while conn.getJobs().get(printid, None) is not None:
-                self.log.info(conn.getJobs().get(printid, None))
-                time.sleep(1)
-            while str(subprocess.check_output(["lpstat"])).find(str(printid)) > 0 and stop < TIMEOUT:
-                stop+= 1
-                time.sleep(1)
-                self.log.info(conn.getJobAttributes(printid)["job-state"])
-            if stop < TIMEOUT:
-                self.log.info('PRINT_SUCCESS')
-            else:
-                self.log.info('PRINT_FAILURE')
-        except:
-            self.log.exception('print failed')
-            self.status("Print failed :(")
-        self.log.info("send_print: Image printed")
+        if self.printer_available:
+            try:
+                conn = cups.Connection()
+                printers = conn.getPrinters()
+                default_printer = printers.keys()[self.selected_printer]#defaults to the first printer installed
+                cups.setUser(getpass.getuser())
+                printid = conn.printFile(default_printer, self.last_picture_filename, self.last_picture_title, {'fit-to-page':'True'})
+                self.log.info('send_print: Sending to printer...')
+                self.printer_available = False
+                stop = 0
+                TIMEOUT = 60
+                PRINTTIME = 70
 
+                #while conn.getJobs().get(printid, None) is not None:
+                #    self.log.info(conn.getJobs().get(printid, None))
+                #    time.sleep(1)
+                #while str(subprocess.check_output(["lpstat"])).find(str(printid)) > 0 and stop < TIMEOUT:
+                #    stop+= 1
+                #    time.sleep(1)
+                #    self.log.info(conn.getJobAttributes(printid)["job-state"])
+                while stop < PRINTTIME:
+                    stop+= 1
+                    time.sleep(1)
+                    self.log.info(stop)
+                if stop < TIMEOUT:
+                    self.printer_available = True
+                    self.log.info('PRINT_SUCCESS')
+                else:
+                    self.log.info('PRINT_FAILURE')
+            except:
+                self.log.exception('print failed')
+                self.status("Print failed :(")
+            self.log.info("send_print: Image printed")
+        else: 
+            self.log.exception('Printer in Use')
+            self.status("Printer is in use")
 
     def kill_tkkb(self):
         """Kill the popup keyboard"""
