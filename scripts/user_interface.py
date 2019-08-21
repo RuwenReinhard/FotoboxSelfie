@@ -921,7 +921,7 @@ class UserInterface():
                 self.log.info('send_print: Sending to printer...')
                 self.printer_available = False
                 pool = ThreadPool(processes=1)
-                result = pool.apply_async(change_printer_available,[self.printer_available])
+                result = pool.apply_async(self.change_printer_available,[self.printer_available])
 
                 self.printer_available = result.get()
                 #while conn.getJobs().get(printid, None) is not None:
