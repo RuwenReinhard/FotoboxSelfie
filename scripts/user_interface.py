@@ -917,6 +917,7 @@ class UserInterface():
                 self.status("Print failed :(")
             self.log.info("send_print: Image printed")
         else:
+            self.log.info("Printer is in Use")
             self.status("Printer is in use")    
 
 
