@@ -24,7 +24,7 @@ import traceback
 import requests
 import time
 import subprocess
-from thread import start_new_thread
+import threading
 
 
 try:
@@ -921,7 +921,8 @@ class UserInterface():
                 self.log.info('send_print: Sending to printer...')
                 self.printer_available = False
                 
-                start_new_thread(self.change_printer_available(), ())
+                x = threading.Thread(target=change_printer_available, args=(self,))
+                x.start()
                
                 #while conn.getJobs().get(printid, None) is not None:
                 #    self.log.info(conn.getJobs().get(printid, None))
