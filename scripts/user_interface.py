@@ -915,9 +915,10 @@ class UserInterface():
                 self.log.exception('print failed')
                 self.status("Print failed :(")
             self.printer_available = False
+            self.log.debug(self.printer_available)
             self.log.info("send_print: Image printed")
             self.log.info("Sleep start")
-            time.sleep(10)
+            time.sleep(25)
             self.log.info("Sleep over")
             self.printer_available = True
         else:
