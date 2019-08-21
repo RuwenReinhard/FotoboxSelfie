@@ -909,7 +909,9 @@ class UserInterface():
             self.log.info('send_print: Sending to printer...')
             stop = 0
             TIMEOUT = 60
- 
+            while conn.getJobs().get(printid, None) is not None:
+                self.log.info(conn.getJobs().get(printid, None))
+                time.sleep(1)
             while str(subprocess.check_output(["lpstat"])).find(str(printid)) > 0 and stop < TIMEOUT:
                 stop+= 1
                 time.sleep(1)
