@@ -907,7 +907,7 @@ class UserInterface():
             stop+= 1
             time.sleep(1)
             self.log.info(stop)    
-        self.printer_available = True
+        return not boolean
 
     def send_print(self):
         self.log.debug("send_print: Printing image")
