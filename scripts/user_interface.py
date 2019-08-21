@@ -908,11 +908,12 @@ class UserInterface():
             printid = conn.printFile(default_printer, self.last_picture_filename, self.last_picture_title, {'fit-to-page':'True'})
             self.log.info('send_print: Sending to printer...')
             stop = 0
-            TIMEOUT = 30
+            TIMEOUT = 60
  
             while str(subprocess.check_output(["lpstat"])).find(str(printid)) > 0 and stop < TIMEOUT:
                 stop+= 1
                 time.sleep(1)
+                self.log.info(conn.getJobAttributes(printid)["job-state"])
             if stop < TIMEOUT:
                 self.log.info('PRINT_SUCCESS')
             else:
