@@ -24,6 +24,7 @@ import traceback
 import requests
 import time
 import subprocess
+from multiprocessing.pool import ThreadPool
 
 
 try:
@@ -899,7 +900,7 @@ class UserInterface():
                 self.tkkb.transient(self.root)
                 self.tkkb.protocol("WM_DELETE_WINDOW", self.kill_tkkb)
 
-    def change_printer_available(self):
+    def change_printer_available(self, boolean):
         stop = 0
         PRINTTIME = 70
         while stop < PRINTTIME:
@@ -916,10 +917,13 @@ class UserInterface():
                 printers = conn.getPrinters()
                 default_printer = printers.keys()[self.selected_printer]#defaults to the first printer installed
                 cups.setUser(getpass.getuser())
-                printid = conn.printFile(default_printer, self.last_picture_filename, self.last_picture_title, {'fit-to-page':'True'})
+                #printid = conn.printFile(default_printer, self.last_picture_filename, self.last_picture_title, {'fit-to-page':'True'})
                 self.log.info('send_print: Sending to printer...')
                 self.printer_available = False
-               
+                pool = ThreadPool(processes=1)
+                result = pool.apply_async(change_printer_available,[self.printer_available])
+
+                self.printer_available = result.get()
                 #while conn.getJobs().get(printid, None) is not None:
                 #    self.log.info(conn.getJobs().get(printid, None))
                 #    time.sleep(1)
@@ -927,7 +931,7 @@ class UserInterface():
                 #    stop+= 1
                 #    time.sleep(1)
                 #    self.log.info(conn.getJobAttributes(printid)["job-state"])
-                output = subprocess.Popen(self.change_printer_available()) #I would like to pass the function object and its arguments               
+                # output = subprocess.Popen(self.change_printer_available()) #I would like to pass the function object and its arguments               
             except:
                 self.log.exception('print failed')
                 self.status("Print failed :(")
