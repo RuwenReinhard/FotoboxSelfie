@@ -900,7 +900,7 @@ class UserInterface():
                 self.tkkb.transient(self.root)
                 self.tkkb.protocol("WM_DELETE_WINDOW", self.kill_tkkb)
 
-    def change_printer_available(self, boolean):
+    def change_printer_available(self):
         stop = 0
         PRINTTIME = 70
         while stop < PRINTTIME:
@@ -921,7 +921,7 @@ class UserInterface():
                 self.log.info('send_print: Sending to printer...')
                 self.printer_available = False
                 
-                start_new_thread(change_printer_available, ())
+                start_new_thread(self.change_printer_available(), ())
                
                 #while conn.getJobs().get(printid, None) is not None:
                 #    self.log.info(conn.getJobs().get(printid, None))
