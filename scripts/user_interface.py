@@ -77,7 +77,7 @@ class LongPressDetector:
         self.long_press_duration = long_press_duration
         root.bind("<Button-1>",self.__click)
         root.bind("<ButtonRelease-1>",self.__release)
-        self.prints_checker = False
+        
 
 
     def suspend(self):
@@ -240,6 +240,7 @@ class UserInterface():
         self.auth_after_id = None
         self.poll_period = poll_period
         self.poll_after_id = None
+        self.printer_available = True
 
         self.last_picture_filename = None
         self.last_picture_time = time.time()
@@ -901,7 +902,7 @@ class UserInterface():
 
     def send_print(self):
         self.log.debug("send_print: Printing image")
-        if self.prints_checker == False:
+        if self.printer_available:
             try:
                 conn = cups.Connection()
                 printers = conn.getPrinters()
@@ -909,9 +910,9 @@ class UserInterface():
                 cups.setUser(getpass.getuser())
                 conn.printFile(default_printer, self.last_picture_filename, self.last_picture_title, {'fit-to-page':'True'})
                 self.log.info('send_print: Sending to printer...')
-                self.prints_checker = True
+                self.printer_available = False
                 time.sleep(5)
-                self.prints_checker = False
+                self.printer_available = True
             except:
                 self.log.exception('print failed')
                 self.status("Print failed :(")
