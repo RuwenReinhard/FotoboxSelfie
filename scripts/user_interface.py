@@ -901,7 +901,8 @@ class UserInterface():
 
 
     def send_print(self):
-        self.log.debug("send_print: Printing image", self.printer_available)
+        self.log.debug("send_print: Printing image")
+        self.log.debug(self.printer_available)
         if self.printer_available:
             try:
                 conn = cups.Connection()
@@ -910,13 +911,13 @@ class UserInterface():
                 cups.setUser(getpass.getuser())
                 conn.printFile(default_printer, self.last_picture_filename, self.last_picture_title, {'fit-to-page':'True'})
                 self.log.info('send_print: Sending to printer...')
-                self.printer_available = False
             except:
                 self.log.exception('print failed')
                 self.status("Print failed :(")
+            self.printer_available = False
             self.log.info("send_print: Image printed")
             self.log.info("Sleep start")
-            time.sleep(5)
+            time.sleep(10)
             self.log.info("Sleep over")
             self.printer_available = True
         else:
