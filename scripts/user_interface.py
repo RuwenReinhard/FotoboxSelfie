@@ -913,7 +913,7 @@ class UserInterface():
         #return self.printer_available
 
     def send_print(self):
-        self.log.debug("send_print: Printing image" + self.printer_available)
+        self.log.debug("send_print: Printing image")
         if self.printer_available:
             try:
                 conn = cups.Connection()
@@ -930,7 +930,7 @@ class UserInterface():
                 if __name__ == '__main__':
                     pool = Pool(processes=1)              # Start a worker processes.
                     self.printer_available = pool.apply_async(self.change_printer_available, callback=None)
-                    self.log.info('printer_available' + self.printer_available)
+                    self.log.info('printer_available')
                      # Evaluate "f(10)" asynchronously calling callback when finished.
                 #while conn.getJobs().get(printid, None) is not None:
                 #    self.log.info(conn.getJobs().get(printid, None))
