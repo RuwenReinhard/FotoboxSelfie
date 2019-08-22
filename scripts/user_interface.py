@@ -903,7 +903,7 @@ class UserInterface():
 
     def change_printer_available(self):
         stop = 0
-        PRINTTIME = 15
+        PRINTTIME = 65
         while stop < PRINTTIME:
             stop+= 1
             time.sleep(1)
@@ -918,14 +918,14 @@ class UserInterface():
 
     def send_print(self):
         self.log.debug("send_print: Printing image")
-        self.log.info(self.printer_available)
+        self.status("Printing image - you can take another photo")
         if self.printer_available:
             try:
                 conn = cups.Connection()
                 printers = conn.getPrinters()
                 default_printer = printers.keys()[self.selected_printer]#defaults to the first printer installed
                 cups.setUser(getpass.getuser())
-                #printid = conn.printFile(default_printer, self.last_picture_filename, self.last_picture_title, {'fit-to-page':'True'})
+                printid = conn.printFile(default_printer, self.last_picture_filename, self.last_picture_title, {'fit-to-page':'True'})
                 self.log.info('send_print: Sending to printer...')
                 self.printer_available = False
                 
