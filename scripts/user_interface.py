@@ -25,6 +25,7 @@ import requests
 import time
 import subprocess
 import threading
+from multiprocessing.dummy import Pool
 
 
 try:
@@ -902,12 +903,13 @@ class UserInterface():
 
     def change_printer_available(self):
         stop = 0
-        PRINTTIME = 70
+        PRINTTIME = 30
         while stop < PRINTTIME:
             stop+= 1
             time.sleep(1)
             self.log.info(stop)    
         self.printer_available = True
+        return self.printer_available
 
     def send_print(self):
         self.log.debug("send_print: Printing image")
@@ -921,8 +923,12 @@ class UserInterface():
                 self.log.info('send_print: Sending to printer...')
                 self.printer_available = False
                 
-                x = threading.Thread(target=self.change_printer_available, args=(self,))
-                x.start()
+                #x = threading.Thread(target=self.change_printer_available, args=(self,))
+                #x.start()
+
+                if __name__ == '__main__':
+                    pool = Pool(processes=1)              # Start a worker processes.
+                    self.printer_available = pool.apply_async(self.change_printer_available, [10], callback=finish) # Evaluate "f(10)" asynchronously calling callback when finished.
                
                 #while conn.getJobs().get(printid, None) is not None:
                 #    self.log.info(conn.getJobs().get(printid, None))
