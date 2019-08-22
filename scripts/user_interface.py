@@ -908,10 +908,11 @@ class UserInterface():
             stop+= 1
             time.sleep(1)
             self.log.info(stop)    
-        #self.printer_available = True
-        return "Finish"
+        self.printer_available = True
+        return self.printer_available
 
     def mycallback(self):
+        self.log.info('Callback called')
         self.printer_available = True
 
     def send_print(self):
