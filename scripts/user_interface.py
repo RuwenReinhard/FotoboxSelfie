@@ -907,7 +907,8 @@ class UserInterface():
         while stop < PRINTTIME:
             stop+= 1
             time.sleep(1)
-            self.log.info(stop)    
+            self.log.info(stop)
+        self.status("")        
         self.printer_available = True
         return self.printer_available
 
