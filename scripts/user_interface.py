@@ -932,7 +932,7 @@ class UserInterface():
 
                 if __name__ == '__main__':
                     pool = Pool(processes=1)              # Start a worker processes.
-                    result = pool.apply_async(self.change_printer_available, callback=mycallback)
+                    result = pool.apply_async(self.change_printer_available, callback=self.mycallback)
                     self.log.info(result)
                      # Evaluate "f(10)" asynchronously calling callback when finished.
                 #while conn.getJobs().get(printid, None) is not None:
