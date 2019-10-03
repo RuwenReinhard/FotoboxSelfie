@@ -928,7 +928,8 @@ class UserInterface():
                 printid = conn.printFile(default_printer, self.last_picture_filename, self.last_picture_title, {'fit-to-page':'True'})
                 self.log.info('send_print: Sending to printer...')
                 self.printer_available = False
-                
+                self.log.info(conn.getJobs().get(printid, None))
+                self.log.info(conn.getJobAttributes(printid)["job-state"])
                 #x = threading.Thread(target=self.change_printer_available, args=(self,))
                 #x.start()
 
@@ -938,12 +939,12 @@ class UserInterface():
                     self.log.info(result)
                      # Evaluate "f(10)" asynchronously calling callback when finished.
                 #while conn.getJobs().get(printid, None) is not None:
-                #    self.log.info(conn.getJobs().get(printid, None))
+                    self.log.info(conn.getJobs().get(printid, None))
                 #    time.sleep(1)
                 #while str(subprocess.check_output(["lpstat"])).find(str(printid)) > 0 and stop < TIMEOUT:
                 #    stop+= 1
                 #    time.sleep(1)
-                #    self.log.info(conn.getJobAttributes(printid)["job-state"])
+                    self.log.info(conn.getJobAttributes(printid)["job-state"])
                 # output = subprocess.Popen(self.change_printer_available()) #I would like to pass the function object and its arguments               
             except:
                 self.log.exception('print failed')
